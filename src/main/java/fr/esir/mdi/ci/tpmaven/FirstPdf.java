@@ -132,7 +132,11 @@ public class FirstPdf {
         // Start a new page
         document.newPage();
     }
-
+    /**
+     * Ajoute contenu a un document
+     * @param document document a modifier
+     * @throws DocumentException Erreur de document
+     */
     static void addContent(Document document) throws DocumentException {
         Anchor anchor = new Anchor("First Chapter", catFont);
         anchor.setName("First Chapter");
