@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FirstPdf.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tpmaven</a> &gt; <a href="index.source.html" class="el_package">fr.esir.mdi.ci.tpmaven</a> &gt; <span class="el_source">FirstPdf.java</span></div><h1>FirstPdf.java</h1><pre class="source lang-java linenums">package fr.esir.mdi.ci.tpmaven;
+
+import java.io.FileOutputStream;
+import java.util.Date;
+
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Section;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+/**
+ * TP Mise a niveau
+ * @author thomas
+ *
+ */
+
+<span class="fc" id="L29">public class FirstPdf {</span>
+<span class="fc" id="L30">    private static String FILE = &quot;FirstPdf.pdf&quot;;</span>
+<span class="fc" id="L31">    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,</span>
+<span class="fc" id="L32">            Font.BOLD);</span>
+<span class="fc" id="L33">    private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,</span>
+<span class="fc" id="L34">            Font.NORMAL, BaseColor.RED);</span>
+<span class="fc" id="L35">    private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,</span>
+<span class="fc" id="L36">            Font.BOLD);</span>
+<span class="fc" id="L37">    private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,</span>
+<span class="fc" id="L38">            Font.BOLD);</span>
+
+    public static void main(String[] args) {
+        try {
+<span class="nc" id="L42">            Document document = new Document();</span>
+<span class="nc" id="L43">            PdfWriter.getInstance(document, new FileOutputStream(FILE));</span>
+<span class="nc" id="L44">            document.open();</span>
+<span class="nc" id="L45">            addMetaData(document);</span>
+<span class="nc" id="L46">            addTitlePage(document);</span>
+<span class="nc" id="L47">            addContent(document);</span>
+<span class="nc" id="L48">            document.close();</span>
+<span class="nc" id="L49">        } catch (Exception e) {</span>
+<span class="nc" id="L50">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L52">    }</span>
+
+    // iText allows to add metadata to the PDF which can be viewed in your Adobe
+    // Reader
+    // under File -&gt; Properties
+    protected static void addMetaData(Document document) {
+<span class="fc" id="L58">        document.addTitle(&quot;My first PDF&quot;);</span>
+<span class="fc" id="L59">        document.addSubject(&quot;Using iText&quot;);</span>
+<span class="fc" id="L60">        document.addKeywords(&quot;Java, PDF, iText&quot;);</span>
+<span class="fc" id="L61">        document.addAuthor(&quot;Olivier Barais&quot;);</span>
+<span class="fc" id="L62">        document.addCreator(&quot;Olivier Barais&quot;);</span>
+<span class="fc" id="L63">    }</span>
+/*//////////////////////////////////////////////////
+    static int codeMortCopCol(int nb) {
+    	if(nb == 1) {
+    		return nb+2;
+    	}else if(nb == 2) {
+    		return nb+2;
+    	}else if(nb == 3) {
+    		return nb+2;
+    	}else if(nb == 4) {
+    		return nb+2;
+    	}else if(nb == 5) {
+    		return nb+2;
+    	}else if(nb == 6) {
+    		return nb+2;
+    	}else if(nb == 7) {
+    		return nb+2;
+    	}else return 0;
+    }
+    
+
+    static int codeMortCopCol2(int nb) {
+    	if(nb == 1) {
+    		return nb+2;
+    	}else if(nb == 2) {
+    		return nb+2;
+    	}else if(nb == 3) {
+    		return nb+2;
+    	}else if(nb == 4) {
+    		return nb+2;
+    	}else if(nb == 5) {
+    		return nb+2;
+    	}else if(nb == 6) {
+    		return nb+2;
+    	}else if(nb == 7) {
+    		return nb+2;
+    	}else return 0;
+    }*////////////////////////////////////////////
+    
+    /**
+     * Ajout un titre a la page
+     * @param document document a modifier
+     * @throws DocumentException Erreur lors du chargement du document
+     */
+    static void addTitlePage(Document document)
+            throws DocumentException {
+<span class="nc" id="L109">        Paragraph preface = new Paragraph();</span>
+        // We add one empty line
+<span class="nc" id="L111">        addEmptyLine(preface, 1);</span>
+        // Lets write a big header
+<span class="nc" id="L113">        preface.add(new Paragraph(&quot;Title of the document&quot;, catFont));</span>
+
+<span class="nc" id="L115">        addEmptyLine(preface, 1);</span>
+        // Will create: Report generated by: _name, _date
+<span class="nc" id="L117">        preface.add(new Paragraph(</span>
+<span class="nc" id="L118">                &quot;Report generated by: &quot; + System.getProperty(&quot;user.name&quot;) + &quot;, &quot; + new Date(), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</span>
+<span class="nc" id="L119">                smallBold));</span>
+<span class="nc" id="L120">        addEmptyLine(preface, 3);</span>
+<span class="nc" id="L121">        preface.add(new Paragraph(</span>
+<span class="nc" id="L122">                &quot;This document describes something which is very important &quot;,</span>
+<span class="nc" id="L123">                smallBold));</span>
+
+<span class="nc" id="L125">        addEmptyLine(preface, 8);</span>
+
+<span class="nc" id="L127">        preface.add(new Paragraph(</span>
+<span class="nc" id="L128">                &quot;This document is a preliminary version and not subject to your license agreement or any other agreement  ;-).&quot;,</span>
+<span class="nc" id="L129">                redFont));</span>
+
+<span class="nc" id="L131">        document.add(preface);</span>
+        // Start a new page
+<span class="nc" id="L133">        document.newPage();</span>
+<span class="nc" id="L134">    }</span>
+
+    static void addContent(Document document) throws DocumentException {
+<span class="nc" id="L137">        Anchor anchor = new Anchor(&quot;First Chapter&quot;, catFont);</span>
+<span class="nc" id="L138">        anchor.setName(&quot;First Chapter&quot;);</span>
+
+        // Second parameter is the number of the chapter
+<span class="nc" id="L141">        Chapter catPart = new Chapter(new Paragraph(anchor), 1);</span>
+
+<span class="nc" id="L143">        Paragraph subPara = new Paragraph(&quot;Subcategory 1&quot;, subFont);</span>
+<span class="nc" id="L144">        Section subCatPart = catPart.addSection(subPara);</span>
+<span class="nc" id="L145">        subCatPart.add(new Paragraph(&quot;Hello&quot;));</span>
+
+<span class="nc" id="L147">        subPara = new Paragraph(&quot;Subcategory 2&quot;, subFont);</span>
+<span class="nc" id="L148">        subCatPart = catPart.addSection(subPara);</span>
+<span class="nc" id="L149">        subCatPart.add(new Paragraph(&quot;Paragraph 1&quot;));</span>
+<span class="nc" id="L150">        subCatPart.add(new Paragraph(&quot;Paragraph 2&quot;));</span>
+<span class="nc" id="L151">        subCatPart.add(new Paragraph(&quot;Paragraph 3&quot;));</span>
+
+        // add a list
+<span class="nc" id="L154">        createList(subCatPart);</span>
+<span class="nc" id="L155">        Paragraph paragraph = new Paragraph();</span>
+<span class="nc" id="L156">        addEmptyLine(paragraph, 5);</span>
+<span class="nc" id="L157">        subCatPart.add(paragraph);</span>
+
+        // add a table
+<span class="nc" id="L160">        createTable(subCatPart);</span>
+
+        // now add all this to the document
+<span class="nc" id="L163">        document.add(catPart);</span>
+
+        // Next section
+<span class="nc" id="L166">        anchor = new Anchor(&quot;Second Chapter&quot;, catFont);</span>
+<span class="nc" id="L167">        anchor.setName(&quot;Second Chapter&quot;);</span>
+
+        // Second parameter is the number of the chapter
+<span class="nc" id="L170">        catPart = new Chapter(new Paragraph(anchor), 1);</span>
+
+<span class="nc" id="L172">        subPara = new Paragraph(&quot;Subcategory&quot;, subFont);</span>
+<span class="nc" id="L173">        subCatPart = catPart.addSection(subPara);</span>
+<span class="nc" id="L174">        subCatPart.add(new Paragraph(&quot;This is a very important message&quot;));</span>
+
+        // now add all this to the document
+<span class="nc" id="L177">        document.add(catPart);</span>
+
+<span class="nc" id="L179">    }</span>
+
+    private static void createTable(Section subCatPart)
+            throws BadElementException {
+<span class="nc" id="L183">        PdfPTable table = new PdfPTable(3);</span>
+
+        // t.setBorderColor(BaseColor.GRAY);
+        // t.setPadding(4);
+        // t.setSpacing(4);
+        // t.setBorderWidth(1);
+
+<span class="nc" id="L190">        PdfPCell c1 = new PdfPCell(new Phrase(&quot;Table Header 1&quot;));</span>
+<span class="nc" id="L191">        c1.setHorizontalAlignment(Element.ALIGN_CENTER);</span>
+<span class="nc" id="L192">        table.addCell(c1);</span>
+
+<span class="nc" id="L194">        c1 = new PdfPCell(new Phrase(&quot;Table Header 2&quot;));</span>
+<span class="nc" id="L195">        c1.setHorizontalAlignment(Element.ALIGN_CENTER);</span>
+<span class="nc" id="L196">        table.addCell(c1);</span>
+
+<span class="nc" id="L198">        c1 = new PdfPCell(new Phrase(&quot;Table Header 3&quot;));</span>
+<span class="nc" id="L199">        c1.setHorizontalAlignment(Element.ALIGN_CENTER);</span>
+<span class="nc" id="L200">        table.addCell(c1);</span>
+<span class="nc" id="L201">        table.setHeaderRows(1);</span>
+
+<span class="nc" id="L203">        table.addCell(&quot;1.0&quot;);</span>
+<span class="nc" id="L204">        table.addCell(&quot;1.1&quot;);</span>
+<span class="nc" id="L205">        table.addCell(&quot;1.2&quot;);</span>
+<span class="nc" id="L206">        table.addCell(&quot;2.1&quot;);</span>
+<span class="nc" id="L207">        table.addCell(&quot;2.2&quot;);</span>
+<span class="nc" id="L208">        table.addCell(&quot;2.3&quot;);</span>
+
+<span class="nc" id="L210">        subCatPart.add(table);</span>
+
+<span class="nc" id="L212">    }</span>
+
+    private static void createList(Section subCatPart) {
+<span class="nc" id="L215">        List list = new List(true, false, 10);</span>
+<span class="nc" id="L216">        list.add(new ListItem(&quot;First point&quot;));</span>
+<span class="nc" id="L217">        list.add(new ListItem(&quot;Second point&quot;));</span>
+<span class="nc" id="L218">        list.add(new ListItem(&quot;Third point&quot;));</span>
+<span class="nc" id="L219">        subCatPart.add(list);</span>
+<span class="nc" id="L220">    }</span>
+
+    /**
+     * Ajoute une ligne vide
+     * @param paragraph Paragraphe ou les ligne serons ajouté
+     * @param number le nombres de ligne vide a ajouté
+     */
+    private static void addEmptyLine(final Paragraph paragraph,final int number) {
+        /////////////////////////////////int a;
+<span class="nc bnc" id="L229" title="All 2 branches missed.">    	for (int i = 0; i &lt; number; i++) {</span>
+<span class="nc" id="L230">            paragraph.add(new Paragraph(&quot; &quot;));</span>
+        }
+<span class="nc" id="L232">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
