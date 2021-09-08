@@ -54,6 +54,10 @@ public class FirstPdf {
     // iText allows to add metadata to the PDF which can be viewed in your Adobe
     // Reader
     // under File -> Properties
+    /**
+     * Ajoute de metadonnée sur le document
+     * @param document document a traiter
+     */
     protected static void addMetaData(Document document) {
         document.addTitle("My first PDF");
         document.addSubject("Using iText");
